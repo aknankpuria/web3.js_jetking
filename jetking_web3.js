@@ -1,203 +1,81 @@
-const Web3 = require("web3");
+import Web3, { providers } from "web3";
 
-const web3 = new Web3(
-  new Web3.providers.HttpProvider(
-    "https://mainnet.infura.io/v3/687792f0f5c44409ab06b6ee455855d3"
-  )
-);
+try {
+    const Web3 = require("web3");
+  
+    const web3 = new Web3(
+      new providers.HttpProvider(
+        "http://localhost:8545"
+      )
+    );
+  
+    // Rest of your code...
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+  
+web3.eth.defaultAccount = web3.eth.accounts[0];
 
-// for example i am taking BNB token in eth main net and it's address is 0xB8c77482e45F1F44dE1745F52C74426C631bDD52 
+var abi = web3.eth.Contract([
+	{
+		"inputs": [],
+		"name": "getInstructor",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_fName",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			}
+		],
+		"name": "setInstructor",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+])
 
-// took its abi from etherscan
-const BNBAbi = [
-  [
-    {
-      constant: true,
-      inputs: [],
-      name: "name",
-      outputs: [{ name: "", type: "string" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: false,
-      inputs: [
-        { name: "_spender", type: "address" },
-        { name: "_value", type: "uint256" },
-      ],
-      name: "approve",
-      outputs: [{ name: "success", type: "bool" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: true,
-      inputs: [],
-      name: "totalSupply",
-      outputs: [{ name: "", type: "uint256" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: false,
-      inputs: [
-        { name: "_from", type: "address" },
-        { name: "_to", type: "address" },
-        { name: "_value", type: "uint256" },
-      ],
-      name: "transferFrom",
-      outputs: [{ name: "success", type: "bool" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: true,
-      inputs: [],
-      name: "decimals",
-      outputs: [{ name: "", type: "uint8" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: false,
-      inputs: [{ name: "amount", type: "uint256" }],
-      name: "withdrawEther",
-      outputs: [],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: false,
-      inputs: [{ name: "_value", type: "uint256" }],
-      name: "burn",
-      outputs: [{ name: "success", type: "bool" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: false,
-      inputs: [{ name: "_value", type: "uint256" }],
-      name: "unfreeze",
-      outputs: [{ name: "success", type: "bool" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: true,
-      inputs: [{ name: "", type: "address" }],
-      name: "balanceOf",
-      outputs: [{ name: "", type: "uint256" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: true,
-      inputs: [],
-      name: "owner",
-      outputs: [{ name: "", type: "address" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: true,
-      inputs: [],
-      name: "symbol",
-      outputs: [{ name: "", type: "string" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: false,
-      inputs: [
-        { name: "_to", type: "address" },
-        { name: "_value", type: "uint256" },
-      ],
-      name: "transfer",
-      outputs: [],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: true,
-      inputs: [{ name: "", type: "address" }],
-      name: "freezeOf",
-      outputs: [{ name: "", type: "uint256" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: false,
-      inputs: [{ name: "_value", type: "uint256" }],
-      name: "freeze",
-      outputs: [{ name: "success", type: "bool" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      constant: true,
-      inputs: [
-        { name: "", type: "address" },
-        { name: "", type: "address" },
-      ],
-      name: "allowance",
-      outputs: [{ name: "", type: "uint256" }],
-      payable: false,
-      type: "function",
-    },
-    {
-      inputs: [
-        { name: "initialSupply", type: "uint256" },
-        { name: "tokenName", type: "string" },
-        { name: "decimalUnits", type: "uint8" },
-        { name: "tokenSymbol", type: "string" },
-      ],
-      payable: false,
-      type: "constructor",
-    },
-    { payable: true, type: "fallback" },
-    {
-      anonymous: false,
-      inputs: [
-        { indexed: true, name: "from", type: "address" },
-        { indexed: true, name: "to", type: "address" },
-        { indexed: false, name: "value", type: "uint256" },
-      ],
-      name: "Transfer",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        { indexed: true, name: "from", type: "address" },
-        { indexed: false, name: "value", type: "uint256" },
-      ],
-      name: "Burn",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        { indexed: true, name: "from", type: "address" },
-        { indexed: false, name: "value", type: "uint256" },
-      ],
-      name: "Freeze",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        { indexed: true, name: "from", type: "address" },
-        { indexed: false, name: "value", type: "uint256" },
-      ],
-      name: "Unfreeze",
-      type: "event",
-    },
-  ],
-];
+const Contractadd = abi.at('0x3a4c58542b5f1863d6bcf458ddfa469c03732b5a');
 
-const BNBAddress = "0xB8c77482e45F1F44dE1745F52C74426C631bDD52" ;
+console.log(Contractadd);
 
-const BNBContract = new web3.eth.Contract(BNBAbi, BNBAddress);
+Contractadd.getInstructor(function(error, result){
+    if(!error){
+        // console.log(result);
+        $('#instructor').text(result[0]+ '('+result[1]+'years old)');
+    }
+    else{
+        console.log(error);
+    }
+});
+
+$("button").click(function(){
+    var name = $('#name').val();
+    var age = $('#age').val();
+    Contractadd.setInstructor(name, age, {from: web3.eth.accounts[0]});
+})
+
+
 
 
 
