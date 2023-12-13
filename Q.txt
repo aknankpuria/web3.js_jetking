@@ -22,3 +22,6 @@ Ans -> To use browser to interact with smart Contract with the help of web3.js w
       4. create your account on infura account and get api key to interact  with mainnet using infura. 
 
        NOTE : its better to keep your api keys and confidential things in .env file . and add this .env file to .gitignore . file for safety purposes . 
+
+     5 . to impliment web3.js we are taking BNB  coin as a example .. also taking its hash and bytecode  form etherscan website . 
+     
