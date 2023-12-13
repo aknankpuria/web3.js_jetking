@@ -1,0 +1,24 @@
+q1 -> 1) Demonstrate how to use browser to interact with Smart Contract with the help of Web3.js. 
+Ans -> To use browser to interact with smart Contract with the help of web3.js we need :-
+         1. web3.js library
+         2. connection to ethereum  node (like infura)
+         3. basic knowledge of javascript
+         4. smart contract 
+
+
+   ## steps to create a project
+
+      1. initlize a project using 
+           `npm init `  command
+
+      2. we can install web3. js by following command :
+          ` npm install web3`
+
+      NOTE : these two steps can be seen in image "1.png" . 
+
+      3. create new javascript file as in our project i have created "jetking_web3.js" 
+               `code can be read from the  jetking_web3.js file .`
+
+      4. create your account on infura account and get api key to interact  with mainnet using infura. 
+
+       NOTE : its better to keep your api keys and confidential things in .env file . and add this .env file to .gitignore . file for safety purposes . 
